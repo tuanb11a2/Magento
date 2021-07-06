@@ -1,0 +1,8 @@
+<theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/theme.x
+sd">
+<title>Magenest</title>
+<parent>Magento/blank</parent>
+<!-- <media>
+<preview_image>media/preview_image.jpeg</preview_image>
+</media> -->
+</theme>
