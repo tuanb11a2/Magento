@@ -28,6 +28,12 @@ class Save extends Action
         $data = $this->getRequest()->getPostValue();
         $id = !empty($data["movie_id"]) ? $data["movie_id"] : null;
 
+        $newData = [
+            'name' => $data["name"],
+            'rating' => $data["rating"],
+            'description' => $data["description"],
+        ];
+
         if(!isset($data["name"])){
             $this->_redirect('movie/magenestmovie/index');
         }
@@ -46,6 +52,7 @@ class Save extends Action
         
         try {
             $movie->addData($newData);
+            $this->_eventManager->dispatch('save_movie',['movie' => $movie]);
             $movie->save();
             return $this->resultRedirect->create()->setPath('movie/magenestmovie/index');
         } catch (\Exception $e) {

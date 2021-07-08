@@ -1,6 +1,6 @@
 <?php
 
-namespace Magenest\Movie\Block\Adminhtml;
+namespace Magenest\Movie\Block\Adminhtml\FrontendModel;
 
 class MagenestActor extends \Magento\Config\Block\System\Config\Form\Field
 {   
