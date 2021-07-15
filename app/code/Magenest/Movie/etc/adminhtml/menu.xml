@@ -12,7 +12,7 @@ enu.xsd">
 
     <add
     id="Magenest_Movie::index"
-    title="MagenestMovie Index"
+    title="Magenest Index"
     module="Magenest_Movie"
     sortOrder="55"
     parent="Magenest_Movie::magenest"

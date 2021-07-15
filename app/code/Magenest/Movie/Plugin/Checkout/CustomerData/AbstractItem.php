@@ -42,7 +42,7 @@ class AbstractItem
         if(isset($result["product_type"]) && $result["product_type"] == "configurable"){
             $result["product_name"] = $result["product_sku"];
 
-            $product = $this->productRepository->get($result["product_sku"]);
+            $product = $this->productRepository->get($result["product_sku"]);                        
 
             $url = $this->product->getThumbnailUrl($product);
             $result["product_image"]["src"] = $url;

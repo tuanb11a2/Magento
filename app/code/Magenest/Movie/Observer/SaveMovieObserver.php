@@ -17,7 +17,7 @@ class SaveMovieObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $movie = $observer->getData('movie');
-        $movie->setData('rating',0);
+        //$movie->setData('rating',0);
         $observer->setData('movie',$movie);
     }
 }

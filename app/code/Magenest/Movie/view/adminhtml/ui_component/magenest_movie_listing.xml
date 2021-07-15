@@ -132,9 +132,10 @@
             </argument>
         </column>
         <!-- Column rating -->
-        <column name="rating">
+        <column name="rating" class="Magenest\Movie\Ui\Component\Listing\Columns\StarRating">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
@@ -145,6 +146,7 @@
                 </item>
             </argument>
         </column>
+
         <!-- Column description -->
         <column name="description">
             <argument name="data" xsi:type="array">

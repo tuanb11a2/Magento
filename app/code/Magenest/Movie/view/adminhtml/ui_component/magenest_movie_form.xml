@@ -99,22 +99,21 @@
             </argument>
         </field>
 
-        <field name="director_id">
+        <field name="director_id" formElement="select" sortOrder="20">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magenest\Movie\Model\Source\Director</item>
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">number</item>
-                    <item name="label" xsi:type="string" translate="true">Director ID</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">magenest_movie</item>
-                    <item name="dataScope" xsi:type="string">director_id</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                        <item name="max_text_length" xsi:type="number">5</item>
-                        <item name="validate-digits" xsi:type="boolean">true</item>
-                        <item name="validate-greater-than-zero" xsi:type="boolean">true</item>
-                    </item>
+                    <item name="source" xsi:type="string">magenest_director</item>
                 </item>
             </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Director</label>
+                <dataScope>director_id</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
     </fieldset>
 </form>

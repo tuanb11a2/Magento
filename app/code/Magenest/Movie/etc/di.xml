@@ -48,4 +48,12 @@
     <type name="Magento\Checkout\CustomerData\AbstractItem">
         <plugin name="configurable_product_avatar" type="Magenest\Movie\Plugin\Checkout\CustomerData\AbstractItem" sortOrder="100" />
     </type>
+
+    <type name="Magento\Theme\Model\View\Design">
+        <arguments>
+            <argument name="themes" xsi:type="array">
+                <item name="adminhtml" xsi:type="string">Magenest/Admin</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
