@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.x
 sd">
-    <event name="checkout_onepage_controller_success_action">
-        <observer name="invoices" instance="Magenest\Movie\Observer\Invoices" />
+    <event name="catalog_product_save_before">
+        <observer name="save_custom_data" instance="Magenest\Movie\Observer\BeforeProductSave"/>
     </event>
 </config>
