@@ -5,4 +5,12 @@ sd">
     <event name="checkout_onepage_controller_success_action">
         <observer name="invoices" instance="Magenest\Movie\Observer\Invoices" />
     </event>
+
+    <event name="customer_save_before">
+        <observer name="prepare_custom_customer_attribute" instance="Magenest\Movie\Observer\PrepareSaveCustomer" />
+    </event>
+
+    <event name="customer_address_save_before">
+        <observer name="prepare_custom_customer_attribute" instance="Magenest\Movie\Observer\PrepareEditAddressCustomer" />
+    </event>
 </config>

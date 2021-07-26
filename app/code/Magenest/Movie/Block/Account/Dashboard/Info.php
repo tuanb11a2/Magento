@@ -14,7 +14,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Newsletter\Model\Subscriber;
 use Magento\Newsletter\Model\SubscriberFactory;
-use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
 use Magento\TestFramework\Utility\ChildrenClassesSearch\E;
 use Magento\Catalog\Helper\Image;
 
@@ -48,7 +48,7 @@ class Info extends Template
      */
     protected $currentCustomer;
 
-    protected $customerRepositoryInterface;
+    protected $customerFactory;
     protected $helper;
 
     /**
@@ -65,14 +65,14 @@ class Info extends Template
         CurrentCustomer $currentCustomer,
         SubscriberFactory $subscriberFactory,
         View $helperView,
-        CustomerRepositoryInterface $customerRepositoryInterface,
+        CustomerFactory $customerFactory,
         Image $helper,
         array $data = []
     ) {
         $this->currentCustomer = $currentCustomer;
         $this->_subscriberFactory = $subscriberFactory;
         $this->_helperView = $helperView;
-        $this->customerRepositoryInterface = $customerRepositoryInterface;
+        $this->customerFactory = $customerFactory;
         $this->helper = $helper;
         parent::__construct($context, $data);
     }
@@ -107,6 +107,22 @@ class Info extends Template
     public function getName()
     {
         return $this->_helperView->getCustomerName($this->getCustomer());
+    }
+
+    public function getAvatar()
+    {
+        $id = $this->getCustomer()->getId();
+        $customer = $this->customerFactory->create()->load($id);
+        $value = $customer->getData('avatar_url');
+        return $value;
+    }
+
+    public function getPhoneNumber()
+    {
+        $id = $this->getCustomer()->getId();
+        $customer = $this->customerFactory->create()->load($id);
+        $value = $customer->getData('phone_number');
+        return $value;
     }
 
     /**

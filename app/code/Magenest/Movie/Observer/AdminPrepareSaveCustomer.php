@@ -4,30 +4,34 @@ namespace Magenest\Movie\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use \Psr\Log\LoggerInterface;
 use \Magento\Framework\Event\Observer;
-use \Magento\Framework\App\RequestInterface;
 
 use function PHPUnit\Framework\isEmpty;
 
-class PrepareSaveCustomer implements ObserverInterface
+class AdminPrepareSaveCustomer implements ObserverInterface
 {
     /** @var \Psr\Log\LoggerInterface $logger */
     protected $logger;
-    protected $request;
 
-    public function __construct(LoggerInterface $logger,RequestInterface $request)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->request = $request;
     }
 
-    
     public function execute(Observer $observer)
     {
-        $param = $this->request->getParams();
-        $phone = $this->checkPhone($param['phone_number']);
         $data = $observer->getData('customer');
-        $data->setData('phone_number',$phone);
-        $observer->setData('customer',$data);
+        if($data->getData('phone_number')){
+            $phone = $data->getData('phone_number');
+            $phone = $this->checkPhone($phone);
+            $data = $data->setData('phone_number',$phone);
+            $observer->setData('customer',$data);
+        }else{
+            $phone = $data->getCustomAttribute('phone_number')->getValue();
+            $phone = $this->checkPhone($phone);
+            $custom = $data->getCustomAttribute('phone_number')->setData('value',$phone);
+            $data->setData('custom_attributes',$custom);
+            $observer->setData($data);
+        }
     }
 
     protected function checkPhone($phone){

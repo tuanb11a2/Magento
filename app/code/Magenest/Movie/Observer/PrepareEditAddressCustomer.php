@@ -8,7 +8,7 @@ use \Magento\Framework\App\RequestInterface;
 
 use function PHPUnit\Framework\isEmpty;
 
-class PrepareSaveCustomer implements ObserverInterface
+class PrepareEditAddressCustomer implements ObserverInterface
 {
     /** @var \Psr\Log\LoggerInterface $logger */
     protected $logger;
@@ -20,14 +20,13 @@ class PrepareSaveCustomer implements ObserverInterface
         $this->request = $request;
     }
 
-    
     public function execute(Observer $observer)
     {
         $param = $this->request->getParams();
-        $phone = $this->checkPhone($param['phone_number']);
-        $data = $observer->getData('customer');
-        $data->setData('phone_number',$phone);
-        $observer->setData('customer',$data);
+        $phone = $this->checkPhone($param['telephone']);
+        $data = $observer->getData('customer_address');
+        $data->setData('telephone',$phone);
+        $observer->setData('customer_address',$data);
     }
 
     protected function checkPhone($phone){

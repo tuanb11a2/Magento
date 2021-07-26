@@ -49,5 +49,53 @@ stem_file.xsd">
             </field>
         </group>
     </section>
+
+    <section id="customer_config" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Customer Config</label>
+            <tab>magenest</tab>
+            <resource>Magenest_Movie::customer_config</resource>
+            <group id="online_course" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Online Course</label>
+                <comment>Select online course for each customer group</comment>
+
+                <field id="select" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Group</label>
+                    <source_model>Magenest\Movie\Model\Source\CustomerGroup</source_model>
+                </field>
+
+                <field id="start_course_notloggedin" translate="label" sortOrder="2" type="date" showInDefault="1" showInStore="1" >
+                    <label>Start Course</label>
+                    <frontend_model>Magenest\Movie\Block\Adminhtml\FrontendModel\Date</frontend_model>
+                    <depends>
+                        <field id="select">0</field>
+                    </depends>
+                </field>
+
+                <field id="end_course_notloggedin" translate="label" sortOrder="2" type="date" showInDefault="1" showInStore="1" >
+                    <label>End Course</label>
+                    <frontend_model>Magenest\Movie\Block\Adminhtml\FrontendModel\Date</frontend_model>
+                    <depends>
+                        <field id="select">0</field>
+                    </depends>
+                </field>
+
+                <field id="start_course_general" translate="label" sortOrder="2" type="date" showInDefault="1" showInStore="1" >
+                    <label>Start Course</label>
+                    <frontend_model>Magenest\Movie\Block\Adminhtml\FrontendModel\Date</frontend_model>
+                    <depends>
+                        <field id="select">1</field>
+                    </depends>
+                </field>
+
+                <field id="end_course_general" translate="label" sortOrder="2" type="date" showInDefault="1" showInStore="1" >
+                    <label>End Course</label>
+                    <frontend_model>Magenest\Movie\Block\Adminhtml\FrontendModel\Date</frontend_model>
+                    <depends>
+                        <field id="select">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
 </system>
 </config>

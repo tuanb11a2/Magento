@@ -8,11 +8,9 @@
             <div class="box-content">
                 <p>Name: <?= $block->escapeHtml($block->getName()) ?></p>
                 <p>Email: <?= $block->escapeHtml($block->getCustomer()->getEmail()) ?></p>
-                <!-- <p>Avatar:
-                    <image src="<?= $block->escapeHtml($block->getAvatar()->getUrl()) ?>"></image>
-                </p> -->
+                <p>Phone Number: <?= $block->escapeHtml($block->getPhoneNumber()) ?></p>
                 <p>Avatar:
-                    <image src="http://example.com/media/customer/index/viewfile/image/cC9zL3BzNV8yLmpwZw%2C%2C/"></image>
+                    <image src="<?= $block->escapeHtml($block->getAvatar()) ?>"></image>
                 </p>
                 <p>Id: <?= $block->escapeHtml($block->getCustomer()->getId()) ?></p>
                 <?= $block->getChildHtml('customer.account.dashboard.info.extra'); ?>

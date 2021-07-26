@@ -1,96 +1,90 @@
 <?php
- 
+
 namespace Magenest\Movie\Setup\Patch\Data;
- 
+
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
-use Magento\Eav\Setup\EavSetup;
-use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Customer\Setup\CustomerSetupFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Eav\Model\Config;
+use Zend_Validate_Exception;
 
 class AddAvatarAttribute implements DataPatchInterface
 {
-    /**
-     * ModuleDataSetupInterface
-     *
-     * @var ModuleDataSetupInterface
-     */
     private $moduleDataSetup;
- 
-    /**
-     * EavSetupFactory
-     *
-     * @var EavSetupFactory
-     */
     private $eavSetupFactory;
 
-
-    private $attributeResource;
-    private $eavConfig;
- 
-    /**
-     * AddProductAttribute constructor.
-     *
-     * @param ModuleDataSetupInterface  $moduleDataSetup
-     * @param EavSetupFactory           $eavSetupFactory
-     */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory $eavSetupFactory,
-        \Magento\Customer\Model\ResourceModel\Attribute $attributeResource,
-        Config $eavConfig
+        CustomerSetupFactory $eavSetupFactory
     ) {
-        $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
-        $this->attributeResource = $attributeResource;
-        $this->eavConfig = $eavConfig;
+        $this->moduleDataSetup = $moduleDataSetup;
     }
- 
+
     /**
-     * {@inheritdoc}
-     */
-    public function apply()
-    {
-        /** @var EavSetup $eavSetup */
-        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
- 
-        $eavSetup->addAttribute('customer', 'avatar', [
-            'type' => 'text',
-            'label' => 'Customer Avatar',
-            'input' => 'image',
-            'source' => '',
-            'visible' => true,
-            'used_in_product_listing' => true,
-            'user_defined' => false,
-            'required' => false,
-            'system' => false,
-            'sort_order' => 80,
-        ]);
-
-        $attribute = $this->eavConfig->getAttribute('customer', 'avatar');
-
-        $attribute->setData('used_in_forms', [
-            'adminhtml_customer',
-        ]);
-
-        $this->attributeResource->save($attribute);
-
-    }
- 
-    /**
-     * {@inheritdoc}
+     * Get array of patches that have to be executed prior to this.
+     *
+     * Example of implementation:
+     *
+     * [
+     *      \Vendor_Name\Module_Name\Setup\Patch\Patch1::class,
+     *      \Vendor_Name\Module_Name\Setup\Patch\Patch2::class
+     * ]
+     *
+     * @return string[]
      */
     public static function getDependencies()
     {
         return [];
     }
- 
+
     /**
-     * {@inheritdoc}
+     * Get aliases (previous names) for the patch.
+     *
+     * @return string[]
      */
     public function getAliases()
     {
         return [];
+    }
+
+    /**
+     * Run code inside patch
+     * If code fails, patch must be reverted, in case when we are speaking about schema - then under revert
+     * means run PatchInterface::revert()
+     *
+     * If we speak about data, under revert means: $transaction->rollback()
+     *
+     * @return void
+     * @throws LocalizedException
+     * @throws Zend_Validate_Exception
+     */
+    public function apply()
+    {
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+
+        $eavSetup->addAttribute('customer', 'avatar_url', [
+            'type' => 'text',
+            'label' => 'Avatar',
+            'input' => 'text',
+            'backend' => '',
+            'default' => '',
+            'global' => ScopedAttributeInterface::SCOPE_STORE,
+            'visible' => true,
+            'used_in_product_listing' => true,
+            'user_defined' => true,
+            'required' => false,
+            'group' => 'General',
+            'sort_order' => 10,
+        ]);
+        $attribute = $eavSetup->getEavConfig()->getAttribute('customer', 'avatar')->addData([
+            'used_in_forms' => [
+                'adminhtml_customer'
+            ]
+        ]);
+        $attribute->save();
+
+        $this->moduleDataSetup->getConnection()->endSetup();
     }
 }

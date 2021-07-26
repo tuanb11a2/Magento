@@ -11,6 +11,7 @@ class BeforeProductSave implements ObserverInterface
     protected $request;
     protected $logger;
     protected $productFactory;
+    protected $categoryLinkManagementInterface;
 
     public function __construct(
         LoggerInterface $logger,
@@ -23,7 +24,7 @@ class BeforeProductSave implements ObserverInterface
         $this->logger = $logger;
     }
 
-    public function execute(Observer $observer)
+        public function execute(Observer $observer)
     {
         $data = $this->request->getParams();
         $time = $this->request->getPostValue();

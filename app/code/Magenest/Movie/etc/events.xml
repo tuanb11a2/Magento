@@ -17,12 +17,5 @@ sd">
     <event name="admin_system_config_changed_section_movie">
         <observer name="custom_admin_system_config_changed_section_magenest" instance="Magenest\Movie\Observer\MagenestConfigObserver"/>
     </event>
-
-    <!-- <event name="customer_save_after_data_object">
-        <observer name="save_custom_customer_attribute" instance="Magenest\Movie\Observer\SaveCustomObserver" />
-    </event> -->
-
-    <!-- <event name="adminhtml_customer_prepare_save">
-        <observer name="prepare_custom_customer_attribute" instance="Magenest\Movie\Observer\PrepareSaveCustomer" />
-    </event> -->
+    
 </config>
